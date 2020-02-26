@@ -1,6 +1,6 @@
 import { join } from "path";
 require("dotenv").config();
-const { API_URL, head, HOST } = require("./config");
+const { head } = require("./config");
 export default {
   mode: "universal",
   head,
@@ -18,6 +18,10 @@ export default {
     singleton: true
   },
   axios: {},
+  generate: {
+    dir: "dist",
+    fallback: true
+  },
   build: {
     extend(config, { isDev, isClient }) {
       config.node = { fs: "empty" };
