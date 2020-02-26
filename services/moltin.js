@@ -1,6 +1,6 @@
 import { gateway as MoltinGateway } from "@moltin/sdk";
 require("dotenv").config();
-const { MOLTIN_CLIENT_ID } = process.env;
+import { MOLTIN_CLIENT_ID } from "~/config/index";
 const Moltin = MoltinGateway({
   client_id: MOLTIN_CLIENT_ID
 });

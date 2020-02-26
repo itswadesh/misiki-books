@@ -1,4 +1,5 @@
 export const API_URL = "https://apiv2.misiki.in";
+export const MOLTIN_CLIENT_ID = "u5WZ3TePWXazVeTdCobosJpBWL0LecsIbTA8lz2DwV";
 export const tokenExpiry = 60 * 60 * 60 * 365; // Login validity (1 year)
 export const locationExpiry = 60 * 60 * 60 * 365 * 5; // Location validity (5 years)
 export const typingTimeout = 0; // After this delay the search api will be fired
