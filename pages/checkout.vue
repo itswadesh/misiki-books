@@ -5,7 +5,7 @@
       class="flex justify-center"
       v-if="loading"
     >
-      <img src="loading.svg" />
+      <img src="/loading.svg" />
     </div>
     <div
       v-if="cart.data.length == 0 && !loading"
@@ -58,6 +58,25 @@
       </div>
     </div>
     <div v-else-if="cart.data.length > 0">
+      <div
+        class="bg-gray-200 p-4"
+        v-bind:class="{ error: isError }"
+        v-if="errors"
+      >
+
+        <ul id="bg-white">
+          <li
+            v-for="(error,ix) in errors"
+            :key="ix"
+          >
+            <div class="">
+              {{ error.source }}
+            </div>
+            <div class="text-red-500">{{ error.detail }}</div>
+          </li>
+        </ul>
+
+      </div>
       <form
         novalidate
         autocomplete="off"
@@ -95,7 +114,7 @@
         <div>Cart ({{ cart.data.length }} items) - {{cart.meta.display_price.with_tax.formatted}}</div>
           <button :disabled="loading"  class="bg-gray-200 rounded-lg px-4 py-2 text-blue-500 hover:bg-blue-500 hover:text-white">
             <span v-if="!loading">Place Order</span>
-            <img src="loading.svg" v-else/>
+            <img src="/loading.svg" v-else/>
           </button>
         </div>
         </form>
@@ -114,6 +133,8 @@ export default {
   components: { Textbox, Textarea, CartItem, Heading, StickyFooter },
   data() {
     return {
+      isError: false,
+      errors: "",
       customer: { phone: null, name: null },
       address: {
         phone: null,
@@ -155,6 +176,8 @@ export default {
         await MoltinService.deleteCart();
         // this.$router.push("/success/" + checkout.data.id);
       } catch (e) {
+        this.isError = true;
+        this.errors = e.errors;
         console.log("err...", e);
       } finally {
         this.loading = false;

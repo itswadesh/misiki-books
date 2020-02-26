@@ -5,7 +5,7 @@
       class="flex justify-center"
       v-if="loading"
     >
-      <img src="loading.svg" />
+      <img src="/loading.svg" />
     </div>
     <div
       v-if="cart.data.length == 0 && !loading"
@@ -24,7 +24,7 @@
     </div>
 
     <div v-else-if="cart.data.length>0">
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap my-1">
         <div
           class="w-full"
           v-for="item in cart.data"

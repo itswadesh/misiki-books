@@ -5,7 +5,7 @@ export default ({ store, app: { $axios } }) => {
     observer: true,
     preLoad: 1.3,
     error: "/instagram.png",
-    loading: "/instagram.png",
+    loading: "/3px.png",
     attempt: 1
   });
 };

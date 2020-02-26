@@ -3,10 +3,10 @@
     <button
       @click="removeFromCart(item.id)"
       class="absolute right-0 rounded h-6 w-6 mt-1 mr-1 bg-gray-200 text-center align-top"
-    >x
-</template>
+    >x</button>
     <img
       class="w-20 h-32 object-contain m-4"
+      v-if="item.image"
       v-lazy="item.image.href"
       alt=""
     />
@@ -14,21 +14,25 @@
       <div class="text-gray-900 font-bold text-xl mb-2">{{item.name}}</div>
       <div class="flex justify-between items-center text-gray-700 text-base">
         {{ item.quantity }}x {{ item.meta.display_price.with_tax.value.formatted }}
-        <img
-          alt="..."
-          class="w-3 h-4 align-middle"
-          src="/loading.svg"
-          v-if="loading"
-        />
-        <div v-else>
+
+        <div class="flex items-center">
           <button
-            v-if="!loading"
-            class="w-8 h-8 rouned-full rounded-full px-3 py-1 font-semibold cursor-pointer bg-gray-500 text-black shadow"
+            :disabled="loading"
+            class="w-8 h-8 rouned-full rounded-full px-3 text-xl font-semibold cursor-pointer bg-gray-200 text-black shadow"
             @click="updateCart(item.product_id,item.quantity-1)"
-          >-</template>
-          {{item.quantity}}
+          >-</button>
+          <div class="mx-2"> <img
+              alt="..."
+              class="w-3 h-4 align-middle"
+              src="/loading.svg"
+              v-if="loading"
+            />
+            <span v-else> {{item.quantity}} </span>
+          </div>
+
           <button
-            class="w-8 h-8 rouned-full rounded-full px-3 py-1 font-semibold cursor-pointer bg-blue-500 text-white shadow"
+            :disabled="loading"
+            class="w-8 h-8 rouned-full rounded-full px-3 font-semibold cursor-pointer text-blue-500 bg-gray-200 shadow text-xl"
             @click="addToBag(item.product_id,1)"
           >+</button>
         </div>
@@ -40,7 +44,7 @@
 <script>
 import MoltinService from "~/services/moltin";
 export default {
-  props: ["item"],
+  props: { item: { type: Object } },
   data() {
     return {
       loading: false
