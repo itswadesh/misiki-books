@@ -2,7 +2,7 @@
   "name": "books",
   "version": "1.0.0",
   "description": "Misiki Books",
-  "author": "itswadesh",
+  "author": "Swadesh Behera <swadesh@litekart.in>",
   "private": true,
   "scripts": {
     "dev": "nuxt",

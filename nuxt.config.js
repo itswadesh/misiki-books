@@ -2,7 +2,7 @@ import { join } from "path";
 require("dotenv").config();
 const { head } = require("./config");
 export default {
-  mode: "universal",
+  mode: "spa",
   head,
   css: [],
   plugins: [{ src: "~/plugins/lazy.js", mode: "client" }],

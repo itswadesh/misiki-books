@@ -1,0 +1,5 @@
+[build]
+  command = "yarn prod"
+  publish = "dist"
+[build.environment]
+  NODE_VERSION = "13"
