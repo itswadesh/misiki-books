@@ -1,37 +1,34 @@
-import { join } from 'path'
+import { join } from "path";
 require("dotenv").config();
 const { API_URL, head, HOST } = require("./config");
 export default {
-  mode: 'universal',
+  mode: "universal",
   head,
   css: [],
   plugins: [{ src: "~/plugins/lazy.js", mode: "client" }],
-  buildModules: ['@nuxtjs/tailwindcss'],
+  buildModules: ["@nuxtjs/tailwindcss"],
   modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    '@nuxtjs/dotenv',
-    "@nuxtjs/toast"
+    "@nuxtjs/axios",
+    "@nuxtjs/pwa",
+    "@nuxtjs/dotenv",
+    "@nuxtjs/toast",
+    "@nuxtjs/font-awesome"
   ],
   toast: {
     singleton: true
   },
-  axios: {
-  },
+  axios: {},
   build: {
     extend(config, { isDev, isClient }) {
-      config.node = { fs: 'empty' };
+      config.node = { fs: "empty" };
     },
     postcss: {
       plugins: {
-        tailwindcss: join(__dirname, 'tailwind.config.js'),
-        'postcss-pxtorem': {
-          propList: [
-            '*',
-            '!border*',
-          ]
+        tailwindcss: join(__dirname, "tailwind.config.js"),
+        "postcss-pxtorem": {
+          propList: ["*", "!border*"]
         }
       }
     }
   }
-}
+};

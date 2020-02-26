@@ -6,10 +6,8 @@ export const loadingTimeout = 500; // Loading indicator will be shown after this
 export const userRoles = ["user", "vendor", "manager", "admin"]; // This should be in ascending order of authority. e.g. In this case user will not have access to any other role, where as admin will have the role of user+vendor+manager+admin
 export const currency = { symbol: "₹", code: "INR" };
 export const TITLE = "Misiki Books";
-export const DESCRIPTION =
-  "Books collection at Misiki for hire";
-export const KEYWORDS =
-  "books,misiki,sunabeda";
+export const DESCRIPTION = "Books collection at Misiki for hire";
+export const KEYWORDS = "books,misiki,sunabeda";
 export const HOST = "https://www.misiki.in";
 export const sharingLogo = "https://www.frontendfun.com/logo.svg";
 export const cities = [
@@ -73,4 +71,4 @@ export const timesList = [
   "10 PM",
   "11 PM",
   "12 AM"
-]
+];

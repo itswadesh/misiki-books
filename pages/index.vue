@@ -16,7 +16,11 @@
         />
       </div>
     </div>
-    <StickyFooter :cart="cart" />
+    <StickyFooter
+      :cart="cart"
+      title="Cart"
+      link="/cart"
+    />
   </div>
 </template>
   
@@ -32,24 +36,29 @@ export default {
   components: { ProductCard, Heading, StickyFooter },
   data() {
     return {
-      cart: [],
-      data: [],
-      cart: [],
+      cart: {
+        data: []
+      },
       products: [],
       images: [],
       meta: {}
     };
   },
   async created() {
-    const {
-      data,
-      links,
-      meta,
-      included
-    } = await MoltinService.getHomepageProducts();
-    this.products = data;
-    this.images = included.main_images;
-    this.cart = await MoltinService.getCart();
+    try {
+      const {
+        data,
+        links,
+        meta,
+        included
+      } = await MoltinService.getHomepageProducts();
+      this.products = data;
+      this.images = included.main_images;
+      this.cart = await MoltinService.getCart();
+    } catch (e) {
+      console.log("err...", e);
+    } finally {
+    }
   },
   methods: {
     async onCartUpdated(cart) {

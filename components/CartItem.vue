@@ -1,5 +1,9 @@
 <template>
-  <div class="w-full flex my-1 bg-white">
+  <div class="w-full flex my-1 bg-white shadow-lg relative">
+    <button
+      @click="removeFromCart(item.id)"
+      class="absolute right-0 rounded h-6 w-6 mt-1 mr-1 bg-gray-200 text-center align-top"
+    >x</button>
     <img
       class="w-20 h-32 object-contain m-4"
       v-lazy="item.image.href"
@@ -16,15 +20,15 @@
           v-if="loading"
         />
         <div v-else>
-          <button
+          <!-- <button
             v-if="!loading"
             class="w-8 h-8 rouned-full rounded-full px-3 py-1 font-semibold cursor-pointer bg-gray-500 text-black shadow"
-            @click="addToBag(item.id,-1)"
-          >-</button>
+            @click="updateCart(item.product_id,item.quantity-1)"
+          >-</button> -->
           {{item.quantity}}
           <button
             class="w-8 h-8 rouned-full rounded-full px-3 py-1 font-semibold cursor-pointer bg-blue-500 text-white shadow"
-            @click="addToBag(item.id,1)"
+            @click="addToBag(item.product_id,1)"
           >+</button>
         </div>
       </div>
@@ -33,6 +37,7 @@
 </template>
 
 <script>
+import MoltinService from "~/services/moltin";
 export default {
   props: ["item"],
   data() {
@@ -41,14 +46,26 @@ export default {
     };
   },
   methods: {
-    async addToBag(product, quantity) {
+    async addToBag(id, quantity) {
       try {
         this.loading = true;
-        const cart = await MoltinService.addToCart(product.id, quantity);
+        const cart = await MoltinService.addToCart(id, quantity);
         this.$toast.success("Added to your cart").goAway(3000);
         this.$emit("onCartUpdated", cart);
       } catch (e) {
-        this.$toast.error(e.errors[0].title).goAway(5000);
+        if (e.errors) this.$toast.error(e.errors[0].title).goAway(5000);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async updateCart(id, quantity) {
+      try {
+        this.loading = true;
+        const cart = await MoltinService.updateCart(id, quantity);
+        this.$toast.success("Cart qty updated").goAway(3000);
+        this.$emit("onCartUpdated", cart);
+      } catch (e) {
+        if (e.errors) this.$toast.error(e.errors[0].title).goAway(5000);
       } finally {
         this.loading = false;
       }
@@ -60,7 +77,7 @@ export default {
         this.$toast.success("Added to your cart").goAway(3000);
         this.$emit("onCartUpdated", cart);
       } catch (e) {
-        this.$toast.error(e.errors[0].title).goAway(5000);
+        if (e.errors) this.$toast.error(e.errors[0].title).goAway(5000);
       } finally {
         this.loading = false;
       }

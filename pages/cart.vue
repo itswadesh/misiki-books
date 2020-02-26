@@ -9,18 +9,25 @@
       <p>You'll need to add some items to the cart before you can checkout.</p>
     </div>
 
-    <div v-if="cart.data.length > 0">
+    <div v-else>
       <div class="flex flex-wrap">
         <div
           class="w-full"
           v-for="item in cart.data"
           :key="item.id"
         >
-          <CartItem :item="item" />
+          <CartItem
+            :item="item"
+            @onCartUpdated="onCartUpdated"
+          />
         </div>
       </div>
     </div>
-    <StickyFooter :cart="cart" />
+    <StickyFooter
+      :cart="cart"
+      title="Checkout"
+      link="/checkout"
+    />
   </div>
 </template>
 
@@ -41,7 +48,11 @@ export default {
     };
   },
   async created() {
-    this.cart = await MoltinService.getCart();
+    try {
+      this.cart = await MoltinService.getCart();
+    } catch (e) {
+      console.log("err...", e);
+    }
   },
   methods: {
     async onCartUpdated(cart) {
