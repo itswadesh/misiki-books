@@ -2,11 +2,25 @@
   <div>
     <Heading :title="`Checkout`" />
     <div
-      class="ui warning message"
-      v-if="cart.data.length == 0"
+      class="flex justify-center"
+      v-if="loading"
     >
-      <div class="text-center py-2 text-xl">Your cart is empty</div>
-      <p>You'll need to add some items to the cart before you can checkout.</p>
+      <img src="loading.svg" />
+    </div>
+    <div
+      v-if="cart.data.length == 0 && !loading"
+      class="bg-white mb-4 px-6  flex flex-col justify-center items-center"
+    >
+      <img
+        src="empty-book.svg"
+        alt=""
+      />
+      <div class="text-center text-3xl">Your cart is empty</div>
+      <p class="my-4 mx-auto">You'll need to add some items to the cart before you can checkout.</p>
+      <nuxt-link
+        to="/"
+        class="my-8 px-8 py-2 bg-blue-500 hover:bg-blue-600 text-white block rounded shadow-lg w-full text-center"
+      >Go</nuxt-link>
     </div>
 
     <div
@@ -36,8 +50,14 @@
       >
         Total: {{checkout.data.meta.display_price.with_tax.formatted}}
       </div>
+      <div class="mt-6 text-center">
+        <nuxt-link
+          to="/"
+          class="px-8 py-2 bg-blue-500 hover:bg-blue-400 text-white rounded text-xl "
+        >Home</nuxt-link>
+      </div>
     </div>
-    <div v-else>
+    <div v-else-if="cart.data.length > 0">
       <form
         novalidate
         autocomplete="off"
@@ -96,10 +116,10 @@ export default {
     return {
       customer: { phone: null, name: null },
       address: {
-        phone: "00000000",
-        first_name: "S",
-        last_name: "B",
-        line_1: "Y-100",
+        phone: null,
+        first_name: null,
+        last_name: null,
+        line_1: null,
         postcode: "763002",
         county: "Sunabeda",
         country: "India",
@@ -112,9 +132,11 @@ export default {
   },
   async created() {
     try {
+      this.loading = true;
       this.cart = await MoltinService.getCart();
     } catch (e) {
     } finally {
+      this.loading = false;
     }
   },
   methods: {
@@ -123,13 +145,14 @@ export default {
         this.loading = true;
         this.customer = {
           email: this.address.phone + "@misiki.in",
-          name: this.address.first_name + " " + this.customer.last_name
+          name: this.address.first_name + " " + this.address.last_name
         };
         this.checkout = await MoltinService.checkout(
           this.customer,
           this.address,
           this.address
         );
+        await MoltinService.deleteCart();
         // this.$router.push("/success/" + checkout.data.id);
       } catch (e) {
         console.log("err...", e);

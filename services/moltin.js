@@ -40,6 +40,10 @@ export default {
     return Moltin.Cart().RemoveItem(itemId);
   },
 
+  deleteCart() {
+    return Moltin.Cart().Delete();
+  },
+
   checkout(customerId, billing, shipping) {
     return Moltin.Cart().Checkout(customerId, billing, shipping);
   },

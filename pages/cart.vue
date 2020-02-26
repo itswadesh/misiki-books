@@ -2,14 +2,28 @@
   <div>
     <Heading :title="`Cart`" />
     <div
-      class="ui warning message"
-      v-if="cart.data.length == 0"
+      class="flex justify-center"
+      v-if="loading"
     >
-      <div class="header">Your cart is empty</div>
-      <p>You'll need to add some items to the cart before you can checkout.</p>
+      <img src="loading.svg" />
+    </div>
+    <div
+      v-if="cart.data.length == 0 && !loading"
+      class="bg-white mb-4 px-6  flex flex-col justify-center items-center"
+    >
+      <img
+        src="empty-book.svg"
+        alt=""
+      />
+      <div class="text-center text-3xl">Your cart is empty</div>
+      <p class="my-4 mx-auto">You'll need to add some items to the cart before you can checkout.</p>
+      <nuxt-link
+        to="/"
+        class="my-8 px-8 py-2 bg-blue-500 hover:bg-blue-600 text-white block rounded shadow-lg w-full text-center"
+      >Go</nuxt-link>
     </div>
 
-    <div v-else>
+    <div v-else-if="cart.data.length>0">
       <div class="flex flex-wrap">
         <div
           class="w-full"
@@ -42,16 +56,18 @@ export default {
   components: { CartItem, Heading, StickyFooter },
   data() {
     return {
-      cart: {
-        data: []
-      }
+      cart: { data: [] },
+      loading: false
     };
   },
   async created() {
     try {
+      this.loading = true;
       this.cart = await MoltinService.getCart();
     } catch (e) {
       console.log("err...", e);
+    } finally {
+      this.loading = false;
     }
   },
   methods: {
