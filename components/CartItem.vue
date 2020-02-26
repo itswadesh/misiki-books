@@ -3,7 +3,8 @@
     <button
       @click="removeFromCart(item.id)"
       class="absolute right-0 rounded h-6 w-6 mt-1 mr-1 bg-gray-200 text-center align-top"
-    >x</button>
+    >x
+</template>
     <img
       class="w-20 h-32 object-contain m-4"
       v-lazy="item.image.href"
@@ -20,11 +21,11 @@
           v-if="loading"
         />
         <div v-else>
-          <!-- <button
+          <button
             v-if="!loading"
             class="w-8 h-8 rouned-full rounded-full px-3 py-1 font-semibold cursor-pointer bg-gray-500 text-black shadow"
             @click="updateCart(item.product_id,item.quantity-1)"
-          >-</button> -->
+          >-</template>
           {{item.quantity}}
           <button
             class="w-8 h-8 rouned-full rounded-full px-3 py-1 font-semibold cursor-pointer bg-blue-500 text-white shadow"
