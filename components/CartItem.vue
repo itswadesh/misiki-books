@@ -19,7 +19,7 @@
           <button
             :disabled="loading"
             class="w-8 h-8 rouned-full rounded-full px-3 text-xl font-semibold cursor-pointer bg-gray-200 text-black shadow"
-            @click="updateCart(item.product_id,item.quantity-1)"
+            @click="updateCart(item.id,item.quantity-1)"
           >-</button>
           <div class="mx-2"> <img
               alt="..."

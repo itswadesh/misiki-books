@@ -12,6 +12,14 @@
     "start": "nuxt start",
     "generate": "nuxt generate"
   },
+  "homepage": "https://github.com/itswadesh/misiki-books#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itswadesh/misiki-books.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itswadesh/misiki-books/issues"
+  },
   "dependencies": {
     "@moltin/sdk": "^3.23.0",
     "@nuxtjs/axios": "^5.3.6",
