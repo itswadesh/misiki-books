@@ -1,5 +1,5 @@
 # misiki-books
-
+Dead simple ecommerce powered by Moltin
 > Misiki Books
 
 ## Build Setup
